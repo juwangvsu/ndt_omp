@@ -46,6 +46,12 @@
 #include "voxel_grid_covariance_omp.h"
 
 #include <unsupported/Eigen/NonLinearOptimization>
+#ifdef _OPENMP
+   #include <omp.h>
+#else
+   #define omp_get_thread_num() 0
+   #define omp_get_max_threads() 1
+#endif
 
 namespace pclomp
 {
@@ -95,8 +101,8 @@ namespace pclomp
 
 	public:
 
-		typedef pcl::shared_ptr< NormalDistributionsTransform<PointSource, PointTarget> > Ptr;
-		typedef pcl::shared_ptr< const NormalDistributionsTransform<PointSource, PointTarget> > ConstPtr;
+		typedef boost::shared_ptr< NormalDistributionsTransform<PointSource, PointTarget> > Ptr;
+		typedef boost::shared_ptr< const NormalDistributionsTransform<PointSource, PointTarget> > ConstPtr;
 
 
 		/** \brief Constructor.
